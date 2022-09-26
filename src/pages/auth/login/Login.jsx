@@ -10,6 +10,7 @@ import {
 } from "../../../helpers/toastMessage";
 import { useDispatch } from "react-redux";
 import { authLoginAction } from "../../../redux/auth/action";
+import Header from "../../../components/header/Header";
 
 const setUser = (user, token) => {
   localStorage.setItem("user", JSON.stringify(user));
@@ -34,6 +35,7 @@ const Login = () => {
 
   return (
     <>
+      <Header />
       <h2>Sign into your account</h2>
       <Formik
         initialValues={{

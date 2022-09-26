@@ -4,6 +4,7 @@ import { Form, Formik } from "formik";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import Header from "../../../components/header/Header";
 import Loader from "../../../components/loader/Loader";
 import {
   handleErrorWithToast,
@@ -30,6 +31,7 @@ const Register = () => {
 
   return (
     <>
+      <Header />
       <h2>Create your account</h2>
       <div className="registerForm">
         <Formik
@@ -156,11 +158,7 @@ const Register = () => {
                 />
                 <br />
                 <br />
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="secondary"
-                >
+                <Button type="submit" variant="contained" color="secondary">
                   Register
                 </Button>
               </Form>

@@ -1,8 +1,7 @@
 import React from "react";
-// import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-// import { authLogoutAction } from "../../redux/auth/actions";
-// import { useAppDispatch } from "../../hooks/reduxHooks";
+import { authLogoutAction } from "../../redux/auth/action";
 
 const Header = () => {
   const menu = [
@@ -10,23 +9,17 @@ const Header = () => {
       name: "Home",
       to: "/",
     },
-    {
-      name: "Dashboard",
-      to: "/dashboard",
-    },
   ];
-  //   const dispatch = useAppDispatch();
-  //   const userState = useSelector((state) => state.userState);
-  //   const { isLoggedIn } = userState;
-  const isLoggedIn = true;
+  const dispatch = useDispatch();
+  const userState = useSelector((state) => state.userState);
+  const { isLoggedIn } = userState;
   const navigate = useNavigate();
   const logIn = () => {
     navigate("/login");
   };
   const logOut = () => {
     navigate("/");
-//     dispatch(authLogoutAction());
-//     handleLogoutFirebase();
+    dispatch(authLogoutAction());
   };
   return (
     <>
@@ -42,9 +35,9 @@ const Header = () => {
       {isLoggedIn ? (
         <>
           <button onClick={logOut}>Logout</button>
-          {/* <button>
-            <Link to="/profile">Profile</Link>
-          </button> */}
+          <button>
+            <Link to="/dashboard">Dashboard</Link>
+          </button>
         </>
       ) : (
         <button onClick={logIn}>Login</button>
