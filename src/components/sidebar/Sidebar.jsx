@@ -70,10 +70,10 @@ const Sidebar = () => {
             <h1>Grid Manager 2.0</h1>
             <NavIcon to="#">
               <br />
-              <h2>
+              <h5>
                 {first}
                 {last}
-              </h2>
+              </h5>
             </NavIcon>
             {SidebarData.map((item, index) => {
               return <SubMenu item={item} key={index} />;
