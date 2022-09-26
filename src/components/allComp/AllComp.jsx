@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import CreateAlert from "../../components/create-alert-form/CreateAlert";
-import Sidebar from "../../components/sidebar/Sidebar";
 import AlertTable from "../../components/table/AlertTable";
 import { UserData } from "../../Data";
 import LineGraph from "../../components/chart/LineGraph";
-import { Outlet } from "react-router-dom";
 const AllComp = () => {
   const [userData, setUserData] = useState({
     labels: UserData.map((data) => data.time),
