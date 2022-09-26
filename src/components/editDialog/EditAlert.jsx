@@ -1,20 +1,39 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   TextField,
+  Button,
+  Checkbox,
+  InputLabel,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  OutlinedInput,
+  Select,
 } from "@mui/material";
 import { Form, Formik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { authAxios } from "../../helpers/authAxios";
+import { handleErrorWithToast } from "../../helpers/toastMessage";
+import { createAlertValidation } from "../../validation/createAlertValidation";
 
-const UpdateAlertDialog = () => {
-  //   const { title, description, isCompleted, _id } = todo;
+const week = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+const UpdateAlertDialog = ({ item, handleUpdate }) => {
+  const { name, criteria, value, email, days, phone, _id } = item;
   const [open, setOpen] = useState(false);
 
-  const updateTodo = (todo) => {
-    handleUpdate(_id, todo);
+  const updateAlert = (data) => {
+    handleUpdate(_id, data);
     closeDialog();
   };
 
@@ -37,20 +56,23 @@ const UpdateAlertDialog = () => {
       >
         <DialogTitle id="dialog-title">Edit Your ALert</DialogTitle>
         <DialogContent>
-          {/* <Formik
+          <Formik
             initialValues={{
-              title: title,
-              description: description,
-              isCompleted: isCompleted,
+              name: name,
+              criteria: criteria,
+              value: value,
+              days: days,
+              email: email,
+              phone: phone,
             }}
             enableReinitialize
-            onSubmit={(values, actions) => {
-              updateTodo(values);
+            onSubmit={(values, { resetForm, setSubmitting }) => {
+              updateAlert(values);
               setTimeout(() => {
-                actions.setSubmitting(false);
+                setSubmitting(true);
               }, 500);
             }}
-        //     validationSchema={todoValidation}
+            validationSchema={createAlertValidation}
           >
             {(props) => {
               const {
@@ -62,82 +84,133 @@ const UpdateAlertDialog = () => {
                 isSubmitting,
               } = props;
               return (
-                <Form style={{ padding: "15px" }}>
-                  <TextField
-                    name="title"
-                    id="title"
-                    label="Title"
-                    value={values.title}
-                    type="text"
-                    helperText={
-                      errors.title && touched.title ? errors.title : null
-                    }
-                    error={errors.title && touched.title ? true : false}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                  <br />
-                  <br />
-                  <TextField
-                    name="description"
-                    id="description"
-                    label="Description"
-                    value={values.description}
-                    type="text"
-                    helperText={
-                      errors.description && touched.description
-                        ? errors.description
-                        : null
-                    }
-                    error={
-                      errors.description && touched.description ? true : false
-                    }
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                  <br />
-                  <br />
-                  <TextField
-                    name="isCompleted"
-                    id="isCompleted"
-                    label="isCompleted"
-                    value={values.isCompleted}
-                    type="text"
-                    helperText={
-                      errors.isCompleted && touched.isCompleted
-                        ? errors.isCompleted
-                        : null
-                    }
-                    error={
-                      errors.isCompleted && touched.isCompleted ? true : false
-                    }
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                  <br />
-                  <br />
-
-                  <DialogActions>
-                    <Button
-                      color="secondary"
-                      disabled={isSubmitting}
-                      onClick={() => closeDialog()}
+                <Form>
+                  <div>
+                    <TextField
+                      name="name"
+                      id="name"
+                      label="Name"
+                      value={values.name}
+                      type="text"
+                      helperText={
+                        errors.name && touched.name ? errors.name : "Enter name"
+                      }
+                      error={errors.name && touched.name ? true : false}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    <br />
+                    <br />
+                    <InputLabel id="criteria">Criteria</InputLabel>
+                    <Select
+                      label="Criteria"
+                      labelId="criteria"
+                      id="criteria"
+                      name="criteria"
+                      value={values.criteria}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors.criteria && touched.criteria ? true : false}
+                      fullWidth
                     >
-                      Cancel
-                    </Button>
+                      <MenuItem value={"Greater"}>Greater</MenuItem>
+                      <MenuItem value={"Less"}>Less</MenuItem>
+                    </Select>
+                    <br />
+                    <br />
+                    <TextField
+                      name="value"
+                      id="value"
+                      label="Value"
+                      value={values.value}
+                      type="number"
+                      helperText={
+                        errors.value && touched.value
+                          ? "Please enter valid value"
+                          : "Enter value"
+                      }
+                      error={errors.value && touched.value ? true : false}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    <br />
+                    <br />
+                    {/* alishan */}
+                    <InputLabel id="demo-multiple-name-label">Days</InputLabel>
+                    <Select
+                      labelId="days"
+                      id="days"
+                      name="days"
+                      multiple
+                      value={values.days}
+                      fullWidth
+                      onChange={handleChange}
+                    >
+                      {week.map((name) => (
+                        <MenuItem key={name} value={name}>
+                          {name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    {/* alishan */}
+                    <br />
+                    <br />
+                    <TextField
+                      name="email"
+                      id="email"
+                      label="Email"
+                      value={values.email}
+                      type="email"
+                      helperText={
+                        errors.email && touched.email
+                          ? "Please enter valid email"
+                          : "Enter email"
+                      }
+                      error={errors.email && touched.email ? true : false}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    <br />
+                    <br />
+                    <TextField
+                      name="phone"
+                      id="value"
+                      label="Phone"
+                      value={values.phone}
+                      type="text"
+                      helperText={
+                        errors.phone && touched.phone
+                          ? "Please enter valid phone"
+                          : "Enter phone"
+                      }
+                      error={errors.phone && touched.phone ? true : false}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    <br />
                     <Button
                       type="submit"
                       variant="contained"
                       color="secondary"
                       disabled={isSubmitting}
                     >
-                      Update Todo
+                      Submit
                     </Button>
-                  </DialogActions>
+                    &nbsp;
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => closeDialog()}
+                    >
+                      Cancel
+                    </Button>
+                    <br />
+                    <br />
+                  </div>
                 </Form>
               );
             }}
-          </Formik> */}
+          </Formik>
         </DialogContent>
       </Dialog>
     </>

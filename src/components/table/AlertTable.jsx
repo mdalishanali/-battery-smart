@@ -44,6 +44,19 @@ const AlertTable = ({ reload, setReload }) => {
       });
   };
 
+  const handleUpdate = (id, data) => {
+    authAxios
+      .put(`/alert/${id}`, data)
+      .then(({ data }) => {
+        handleToastMsg("Successfully updated");
+        getAllItem();
+      })
+      .catch((error) => {
+        handleErrorWithToast(error);
+        setReload(false);
+      });
+  };
+
   useEffect(() => {
     getAllItem();
   }, [page, alertPerPage, reload]);
@@ -115,7 +128,10 @@ const AlertTable = ({ reload, setReload }) => {
                     >
                       Delete
                     </button>
-                    <UpdateAlertDialog />
+                    <UpdateAlertDialog
+                      item={data}
+                      handleUpdate={handleUpdate}
+                    />
                   </TableCell>
                 </TableRow>
               ))}
