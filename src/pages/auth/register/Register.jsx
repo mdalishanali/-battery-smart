@@ -174,7 +174,7 @@ const Register = () => {
                   type="submit"
                   variant="contained"
                   color="secondary"
-                  disabled={isSubmitting}
+                  // disabled={isSubmitting}
                 >
                   Register
                 </Button>

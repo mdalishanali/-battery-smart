@@ -23,7 +23,14 @@ const AppRoutes = () => {
               </AuthGuard>
             }
           />
-          <Route path="*" element={<Login />} />
+          <Route
+            path="*"
+            element={
+              <AuthGuard>
+                <Dashboard />
+              </AuthGuard>
+            }
+          />
         </Routes>
       </Suspense>
     </>

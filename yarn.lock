@@ -247,6 +247,16 @@
     "@babel/helper-validator-identifier" "^7.18.6"
     to-fast-properties "^2.0.0"
 
+"@coreui/icons-react@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@coreui/icons-react/-/icons-react-2.1.0.tgz#4ea785ce1d127ff738c5b761ee2953e33f6b26b4"
+  integrity sha512-x7qhVB6IJFbGBh/An3QZHtuUISM+TBgc4x3ecrBel+wMdJm4Qpmg9Km0GFfOkP6/fNOfy2fLb2wZ2bbe5+sgQA==
+
+"@coreui/react@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@coreui/react/-/react-4.4.0.tgz#a1b5e35b93c73db4326bb41151b779287fc64185"
+  integrity sha512-72ZKArQQCMknqaE5AHDdOGy/kTl7xDK/I8reuWX6uTHLRD3Rz85pIA5IUzHafLIOlte8Sci0fdWYG8UshpXQyQ==
+
 "@emotion/babel-plugin@^11.10.0":
   version "11.10.2"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.10.2.tgz#879db80ba622b3f6076917a1e6f648b1c7d008c7"
