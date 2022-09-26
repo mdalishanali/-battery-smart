@@ -6,6 +6,13 @@ import * as RiIcons from "react-icons/ri";
 
 export const SidebarData = [
   {
+    title: "Dashboard",
+    path: "/dashboard",
+    icon: <AiIcons.AiFillHome />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+  },
+  {
     title: "Peak Shaving & Alert",
     path: "/dashboard",
     icon: <AiIcons.AiFillHome />,
@@ -15,77 +22,54 @@ export const SidebarData = [
     subNav: [
       {
         title: "Ventillation",
-        path: "entillation",
+        path: "ventillation",
         icon: <IoIcons.IoIosPaper />,
       },
       {
         title: "Revenue",
-        path: "/overview/revenue",
+        path: "revenue",
         icon: <IoIcons.IoIosPaper />,
       },
     ],
   },
   {
-    title: "Reports",
-    path: "/reports",
-    icon: <IoIcons.IoIosPaper />,
+    title: "Peak Shaving",
+    path: "/dashboard",
+    icon: <AiIcons.AiFillHome />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
 
     subNav: [
       {
-        title: "Reports",
-        path: "/reports/reports1",
+        title: "Ventillation",
+        path: "ventillation",
         icon: <IoIcons.IoIosPaper />,
-        cName: "sub-nav",
       },
       {
-        title: "Reports 2",
-        path: "/reports/reports2",
-        icon: <IoIcons.IoIosPaper />,
-        cName: "sub-nav",
-      },
-      {
-        title: "Reports 3",
-        path: "/reports/reports3",
+        title: "Revenue",
+        path: "revenue",
         icon: <IoIcons.IoIosPaper />,
       },
     ],
   },
   {
-    title: "Products",
-    path: "/products",
-    icon: <FaIcons.FaCartPlus />,
-  },
-  {
-    title: "Team",
-    path: "/team",
-    icon: <IoIcons.IoMdPeople />,
-  },
-  {
-    title: "Messages",
-    path: "/messages",
-    icon: <FaIcons.FaEnvelopeOpenText />,
-
+    title: "Peak Shaving",
+    path: "/dashboard",
+    icon: <AiIcons.AiFillHome />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
 
     subNav: [
       {
-        title: "Message 1",
-        path: "/messages/message1",
+        title: "Ventillation",
+        path: "ventillation",
         icon: <IoIcons.IoIosPaper />,
       },
       {
-        title: "Message 2",
-        path: "/messages/message2",
+        title: "Revenue",
+        path: "revenue",
         icon: <IoIcons.IoIosPaper />,
       },
     ],
-  },
-  {
-    title: "Support",
-    path: "/support",
-    icon: <IoIcons.IoMdHelpCircle />,
   },
 ];
