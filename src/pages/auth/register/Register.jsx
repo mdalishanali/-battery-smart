@@ -2,48 +2,34 @@ import { Button, TextField } from "@mui/material";
 import axios from "axios";
 import { Form, Formik } from "formik";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "../../../components/loader/Loader";
 import {
   handleErrorWithToast,
   handleToastMsg,
 } from "../../../helpers/toastMessage";
+import { authRegisterAction } from "../../../redux/auth/action";
 import { registerValidation } from "../../../validation/auth.validation";
-const baseUrl = import.meta.env.VITE_APP_API_URL;
 
-const setUser = (user, token) => {
-  localStorage.setItem("user", JSON.stringify(user));
-  localStorage.setItem("jwt", JSON.stringify(token));
-};
 const Register = () => {
-  const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
-  const registerUser = (user, setSubmitDisable) => {
-    setLoader(true);
-    setSubmitDisable(true);
-    axios
-      .post(`${baseUrl}/auth/register`, user)
-      .then(({ data }) => {
-        const { token, user } = data;
-        setUser(user, token);
-        setLoader(false);
-        handleORegisterSuccess("Successfully registered..");
-        setSubmitDisable(true);
-      })
-      .catch((error) => {
-        handleErrorWithToast(error);
-        setLoader(false);
-        setSubmitDisable(false);
-      });
+  const dispatch = useDispatch();
+  const registerUser = (user) => {
+    dispatch(authRegisterAction(user, handleRegisterSuccess, handleError));
   };
 
-  const handleORegisterSuccess = (msg) => {
-    handleToastMsg(msg);
+  const handleRegisterSuccess = () => {
+    handleToastMsg("Account created successfully...");
     navigate("/dashboard");
   };
+
+  const handleError = (error) => {
+    handleErrorWithToast(error);
+  };
+
   return (
     <>
-      {loader && <Loader />}
       <h2>Create your account</h2>
       <div className="registerForm">
         <Formik
@@ -57,7 +43,7 @@ const Register = () => {
             confirmPassword: "",
           }}
           onSubmit={(values, actions) => {
-            registerUser(values, actions.setSubmitting);
+            registerUser(values);
             setTimeout(() => {
               actions.setSubmitting(true);
             }, 500);
@@ -174,7 +160,6 @@ const Register = () => {
                   type="submit"
                   variant="contained"
                   color="secondary"
-                  // disabled={isSubmitting}
                 >
                   Register
                 </Button>

@@ -5,15 +5,15 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import AlertTable from "../../components/table/AlertTable";
 import "./style.css";
 import { UserData } from "../../Data";
-import MultiLineGraph from "../../components/chart/Chart";
+import LineGraph from "../../components/chart/LineGraph";
 
 export const Dashboard = () => {
   const [userData, setUserData] = useState({
-    labels: UserData.map((data) => data.year),
+    labels: UserData.map((data) => data.time),
     datasets: [
       {
-        label: "Users Gained",
-        data: UserData.map((data) => data.userGain),
+        label: "Dk-1",
+        data: UserData.map((data) => data.inc),
         backgroundColor: [
           "rgba(75,192,192,1)",
           "#ecf0f1",
@@ -23,10 +23,13 @@ export const Dashboard = () => {
         ],
         borderColor: "black",
         borderWidth: 2,
+        fill: true,
+        backgroundColor: "#e6a02933",
+        borderColor: "rgba(75,192,192,1)",
       },
       {
-        label: "Users Lossed",
-        data: UserData.map((data) => data.userGain),
+        label: "Dk-2",
+        data: UserData.map((data) => data.dec),
         backgroundColor: [
           "rgba(75,192,192,1)",
           "#ecf0f1",
@@ -34,8 +37,10 @@ export const Dashboard = () => {
           "#f3ba2f",
           "#2a71d0",
         ],
+        fill: true,
         borderColor: "black",
         borderWidth: 2,
+        backgroundColor: "pink",
       },
     ],
   });
@@ -56,8 +61,8 @@ export const Dashboard = () => {
         {/* here is  */}
         <div className="data-parent">
           <div className="graph-section">
-            <div style={{ width: "50%", height: "100px" }}>
-              <MultiLineGraph />
+            <div style={{ width: "50%", height: "1vh" }}>
+              <LineGraph chartData={userData} />
             </div>
           </div>
           <div className="create-and-view-section">

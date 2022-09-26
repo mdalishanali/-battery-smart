@@ -8,7 +8,8 @@ import {
   handleErrorWithToast,
   handleToastMsg,
 } from "../../../helpers/toastMessage";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { authLoginAction } from "../../../redux/auth/action";
 
 const setUser = (user, token) => {
   localStorage.setItem("user", JSON.stringify(user));
@@ -17,37 +18,22 @@ const setUser = (user, token) => {
 
 const Login = () => {
   const navigate = useNavigate();
-  const [loader, setLoader] = useState(false);
-
-  const login = (user, setSubmitDisable) => {
-    const baseUrl = import.meta.env.VITE_APP_API_URL;
-    setLoader(true);
-    setSubmitDisable(true);
-    axios
-      .post(`${baseUrl}/auth/login`, user)
-      .then(({ data }) => {
-        const { token, user } = data;
-        setUser(user, token);
-        handleORegisterSuccess('Successfullt Logged In')
-        setLoader(false);
-        setSubmitDisable(true);
-      })
-      .catch((error) => {
-        console.log("error", error);
-        handleErrorWithToast(error);
-        setLoader(false);
-        setSubmitDisable(false);
-      });
+  const dispatch = useDispatch();
+  const login = (user) => {
+    dispatch(authLoginAction(user, handleRegisterSuccess, handleError));
   };
 
-  const handleORegisterSuccess = (msg) => {
-    handleToastMsg(msg);
+  const handleRegisterSuccess = () => {
+    handleToastMsg("Logged in successfully...");
     navigate("/dashboard");
+  };
+
+  const handleError = (error) => {
+    handleErrorWithToast(error);
   };
 
   return (
     <>
-      {loader && <Loader />}
       <h2>Sign into your account</h2>
       <Formik
         initialValues={{
@@ -55,7 +41,7 @@ const Login = () => {
           password: "",
         }}
         onSubmit={(values, actions) => {
-          login(values, actions.setSubmitting);
+          login(values);
           setTimeout(() => {
             actions.setSubmitting(false);
           }, 500);
@@ -110,12 +96,7 @@ const Login = () => {
                 />
                 <br />
                 <br />
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="secondary"
-                  disabled={isSubmitting}
-                >
+                <Button type="submit" variant="contained" color="secondary">
                   Login
                 </Button>
                 <br />
