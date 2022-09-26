@@ -18,7 +18,8 @@ import {
   handleToastMsg,
 } from "../../helpers/toastMessage";
 import { authAxios } from "../../helpers/authAxios";
-const AlertTable = () => {
+import UpdateAlertDialog from "../editDialog/EditAlert";
+const AlertTable = ({ reload, setReload }) => {
   const [alerts, setAlerts] = useState([]);
   const [page, setPage] = useState(0);
   const [alertPerPage, setAlertPerPage] = useState(10);
@@ -35,15 +36,17 @@ const AlertTable = () => {
         const { alerts, totalPages, counts } = data;
         setAlerts(alerts);
         setCount(counts);
+        setReload(false);
       })
       .catch((error) => {
         handleErrorWithToast(error);
+        setReload(false);
       });
   };
 
   useEffect(() => {
     getAllItem();
-  }, [page, alertPerPage]);
+  }, [page, alertPerPage, reload]);
 
   const handleDelete = (itemId) => {
     authAxios
@@ -78,6 +81,7 @@ const AlertTable = () => {
             textAlign: "center",
           }}
         >
+          <button onClick={() => setReload(true)}>Relaod</button>
           <Table aria-label="Admin Users" stickyHeader>
             <TableHead>
               <TableRow>
@@ -111,6 +115,7 @@ const AlertTable = () => {
                     >
                       Delete
                     </button>
+                    <UpdateAlertDialog />
                   </TableCell>
                 </TableRow>
               ))}

@@ -24,13 +24,27 @@ export const Dashboard = () => {
         borderColor: "black",
         borderWidth: 2,
       },
+      {
+        label: "Users Lossed",
+        data: UserData.map((data) => data.userGain),
+        backgroundColor: [
+          "rgba(75,192,192,1)",
+          "#ecf0f1",
+          "#50AF95",
+          "#f3ba2f",
+          "#2a71d0",
+        ],
+        borderColor: "black",
+        borderWidth: 2,
+      },
     ],
   });
+  const [refreshTable, setRefreshTable] = useState(false);
 
   return (
     <div className="main-section">
       <div className="sidebar-section">
-        <p>Sidebar</p>
+        {/* <p>Sidebar</p> */}
         <Sidebar />
       </div>
 
@@ -48,11 +62,11 @@ export const Dashboard = () => {
           </div>
           <div className="create-and-view-section">
             <div className="create-alert">
-              <CreateAlert />
+              <CreateAlert reload={setRefreshTable} />
             </div>
-            <div className="table-data">
+            <div className="table-data" style={{ width: "100%" }}>
               <h1>Table Data</h1>
-              <AlertTable />
+              <AlertTable reload={refreshTable} setReload={setRefreshTable} />
             </div>
           </div>
         </div>

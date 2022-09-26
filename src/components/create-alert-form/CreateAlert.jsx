@@ -30,7 +30,7 @@ const days = [
 ];
 const baseUrl = import.meta.env.VITE_APP_API_URL;
 
-const CreateAlert = () => {
+const CreateAlert = ({ reload }) => {
   const [loader, setLoader] = useState(false);
 
   const createAlertApiCall = (data, resetForm, setSubmitDisable) => {
@@ -41,6 +41,7 @@ const CreateAlert = () => {
       .then(({ data }) => {
         setLoader(false);
         handleToastMsg("Alert created successfully");
+        reload(true);
         resetForm();
       })
       .catch((error) => {
