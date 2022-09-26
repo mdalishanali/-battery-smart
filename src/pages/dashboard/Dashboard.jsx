@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import GraphChart from "../../components/chart/Chart";
+// import GraphChart from "../../components/chart/Chart";
 import CreateAlert from "../../components/create-alert-form/CreateAlert";
 import Sidebar from "../../components/sidebar/Sidebar";
 import AlertTable from "../../components/table/AlertTable";
 import "./style.css";
 import { UserData } from "../../Data";
+import MultiLineGraph from "../../components/chart/Chart";
 
 export const Dashboard = () => {
-
   const [userData, setUserData] = useState({
     labels: UserData.map((data) => data.year),
     datasets: [
@@ -42,10 +42,9 @@ export const Dashboard = () => {
         {/* here is  */}
         <div className="data-parent">
           <div className="graph-section">
-            <h1>Graph</h1>={" "}
-            {/* <div style={{ width: 700 }}>
-              <GraphChart chartData={userData} />
-            </div> */}
+            <div style={{ width: "50%", height: "100px" }}>
+              <MultiLineGraph />
+            </div>
           </div>
           <div className="create-and-view-section">
             <div className="create-alert">
